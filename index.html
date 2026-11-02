@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aptis Part 4 Master - B1 Prep</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --subtext: #475569;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #16a34a;
+            --success-bg: #dcfce7;
+            --danger: #dc2626;
+            --danger-bg: #fee2e2;
+            --warning: #d97706;
+            --warning-bg: #fef3c7;
+            --border: #e2e8f0;
+            --radius: 14px;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding-bottom: 40px;
+        }
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+        header {
+            background: var(--card);
+            padding: 14px 16px;
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+        .logo-area h1 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+        .logo-area p {
+            font-size: 0.75rem;
+            color: var(--subtext);
+        }
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .stat-item {
+            background: var(--card);
+            padding: 8px 6px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .stat-val {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: block;
+        }
+        .stat-lbl {
+            font-size: 0.7rem;
+            color: var(--subtext);
+        }
+        .controls {
+            background: var(--card);
+            padding: 12px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .control-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        select, button {
+            font-family: inherit;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            padding: 9px 12px;
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        select {
+            flex: 1;
+            min-width: 140px;
+            font-weight: 500;
+        }
+        .btn-mode {
+            flex: 1;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .btn-mode.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .quiz-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 18px 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 14px;
+            position: relative;
+        }
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+        .badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: #e2e8f0;
+            color: #334155;
+        }
+        .badge-topic {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-hot {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .badge-srs {
+            background: #fce7f3;
+            color: #9d174d;
+        }
+        .card-actions {
+            display: flex;
+            gap: 6px;
+        }
+        .icon-btn {
+            border: 1px solid var(--border);
+            background: var(--bg);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            padding: 0;
+        }
+        .icon-btn.starred {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            color: #d97706;
+        }
+        .lesson-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--subtext);
+            margin-bottom: 8px;
+        }
+        .question-box {
+            margin-bottom: 16px;
+        }
+        .q-en {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        .q-vi {
+            font-size: 0.9rem;
+            color: var(--subtext);
+            display: none;
+        }
+        .q-vi.show {
+            display: block;
+        }
+        .timer-bar-wrap {
+            width: 100%;
+            height: 5px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .timer-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 100%;
+            transition: width 1s linear, background-color 0.3s;
+        }
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 13px 14px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: var(--card);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.96rem;
+            line-height: 1.4;
+            transition: transform 0.08s ease, border-color 0.15s;
+        }
+        .option-btn:active:not(:disabled) {
+            transform: scale(0.99);
+        }
+        .opt-letter {
+            font-weight: 800;
+            color: var(--primary);
+            min-width: 22px;
+        }
+        .opt-content {
+            flex: 1;
+        }
+        .opt-en {
+            font-weight: 600;
+            display: block;
+        }
+        .opt-vi {
+            font-size: 0.84rem;
+            color: var(--subtext);
+            margin-top: 3px;
+            display: none;
+        }
+        .opt-vi.show {
+            display: block;
+        }
+        .opt-audio {
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            padding: 2px 6px;
+            color: var(--subtext);
+        }
+        .option-btn.correct {
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: #065f46;
+        }
+        .option-btn.correct .opt-letter {
+            color: var(--success);
+        }
+        .option-btn.wrong {
+            background: var(--danger-bg);
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+        .option-btn.wrong .opt-letter {
+            color: var(--danger);
+        }
+        .feedback-box {
+            margin-top: 16px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary);
+            display: none;
+        }
+        .feedback-box.show {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fb-status {
+            font-weight: 800;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .fb-detail {
+            font-size: 0.88rem;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .nav-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-weight: 700;
+            flex: 2;
+            padding: 13px;
+            font-size: 0.95rem;
+            border-radius: 10px;
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            font-weight: 600;
+            flex: 1;
+            padding: 13px;
+            border-radius: 10px;
+        }
+        .settings-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--subtext);
+            padding: 8px 4px;
+        }
+        .toggle-lbl {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 32px 16px;
+        }
+        .empty-state h3 {
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        .empty-state p {
+            font-size: 0.9rem;
+            color: var(--subtext);
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo-area">
+            <h1>⚡ Aptis B1 Master</h1>
+            <p>Part 4 (70 Bài - 140 Câu hỏi chuẩn PDF)</p>
+        </div>
+        <div style="display:flex; gap:6px; align-items:center;">
+            <span id="timerText" style="font-weight:800; font-size:0.95rem; color:var(--primary); min-width:36px; text-align:right;">30s</span>
+            <button class="icon-btn" id="btnReset" title="Xoá tiến độ làm lại từ đầu">🔄</button>
+        </div>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-val" id="statMastered" style="color:var(--success)">0/140</span>
+            <span class="stat-lbl">Đã thuộc</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-val" id="statWrong" style="color:var(--danger)">0</span>
+            <span class="stat-lbl">Cần ôn (SRS)</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-val" id="statHot" style="color:var(--warning)">0</span>
+            <span class="stat-lbl">Quan trọng 🔥</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-val" id="statAcc">0%</span>
+            <span class="stat-lbl">Chính xác</span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="control-row">
+            <button class="btn-mode active" data-mode="smart">🧠 Học thông minh (SRS)</button>
+            <button class="btn-mode" data-mode="hot">🔥 Ưu tiên câu Hot</button>
+            <button class="btn-mode" data-mode="wrong">❌ Câu hay sai</button>
+            <button class="btn-mode" data-mode="all">📚 Tất cả</button>
+        </div>
+        <div class="control-row">
+            <select id="topicSelect">
+                <option value="all">📁 Tất cả chủ đề (39 Topics)</option>
+            </select>
+            <select id="timerSelect" style="flex:0.4; min-width:95px;">
+                <option value="15">⏱️ 15 giây</option>
+                <option value="30" selected>⏱️ 30 giây</option>
+                <option value="45">⏱️ 45 giây</option>
+                <option value="0">⏱️ Tắt giờ</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="quizContainer" class="quiz-card">
+        <div class="timer-bar-wrap" id="timerBarWrap">
+            <div class="timer-bar" id="timerBar"></div>
+        </div>
+
+        <div class="card-top">
+            <div class="badges" id="badgeContainer"></div>
+            <div class="card-actions">
+                <button class="icon-btn" id="btnSpeakQ" title="Đọc câu hỏi & đáp án">🔊</button>
+                <button class="icon-btn" id="btnStar" title="Đánh dấu quan trọng">⭐</button>
+            </div>
+        </div>
+
+        <div class="lesson-title" id="lessonTitle"></div>
+
+        <div class="question-box">
+            <div class="q-en" id="qEn"></div>
+            <div class="q-vi" id="qVi"></div>
+        </div>
+
+        <div class="options-list" id="optionsList"></div>
+
+        <div class="feedback-box" id="feedbackBox">
+            <div class="fb-status" id="fbStatus"></div>
+            <div class="fb-detail" id="fbDetail"></div>
+        </div>
+
+        <div class="nav-bar">
+            <button class="btn-secondary" id="btnPrev">⬅ Câu trước</button>
+            <button class="btn-primary" id="btnNext">Câu tiếp theo ➡</button>
+        </div>
+    </div>
+
+    <div class="settings-bar">
+        <label class="toggle-lbl">
+            <input type="checkbox" id="chkAutoAudio"> Tự động đọc tiếng Anh
+        </label>
+        <label class="toggle-lbl">
+            <input type="checkbox" id="chkAlwaysVi"> Luôn hiện dịch tiếng Việt
+        </label>
+    </div>
+</div>
+
+<script>
+const RAW_LESSONS = [
+  {b:1, t:"Novels", title:"Bài 01: A newly released novel (2026)", f:2, q:[
+    ["16.1","What does the announcer say about the new novel?","Người dẫn chương trình nói gì về cuốn tiểu thuyết mới?",0,[
+      ["It is different from his earlier works","Cuốn sách khác với những tác phẩm trước đây của tác giả."],
+      ["It is romantic and soft","Cuốn sách lãng mạn và nhẹ nhàng."],
+      ["It is less famous than his earlier works","Cuốn sách ít nổi tiếng hơn những tác phẩm trước đây của tác giả."]
+    ]],
+    ["16.2","What does the announcer say the writer should do in the future?","Người dẫn chương trình cho rằng nhà văn nên làm gì trong tương lai?",2,[
+      ["The writer should continue to write this genre","Nhà văn nên tiếp tục viết thể loại này."],
+      ["The writer should go back to his original genre","Nhà văn nên quay lại thể loại ban đầu của mình."],
+      ["He should listen to critics before writing his next work","Ông ấy nên lắng nghe các nhà phê bình trước khi viết tác phẩm tiếp theo."]
+    ]]
+  ]},
+  {b:2, t:"Novels", title:"Bài 02: Criticism of the New Novel (2026)", f:4, q:[
+    ["17.1","What does the reviewer say about the characters in the novel?","Người đánh giá nói gì về các nhân vật trong tiểu thuyết?",1,[
+      ["They are too difficult for readers to understand.","Các nhân vật quá khó hiểu đối với độc giả."],
+      ["They feel realistic and emotionally engaging.","Các nhân vật có vẻ chân thực và tạo được sự gắn kết về cảm xúc."],
+      ["They are less important than the storyline.","Các nhân vật ít quan trọng hơn mạch truyện."]
+    ]],
+    ["17.2","What does the reviewer suggest about the impact of the novel?","Người đánh giá gợi ý điều gì về tác động của cuốn tiểu thuyết?",1,[
+      ["It may divide readers' opinions.","Cuốn tiểu thuyết có thể khiến độc giả có những ý kiến trái chiều."],
+      ["It will establish the author's popularity.","Cuốn tiểu thuyết sẽ giúp tác giả trở nên nổi tiếng."],
+      ["It will mainly appeal to academic audiences.","Cuốn tiểu thuyết chủ yếu thu hút độc giả trong giới học thuật."]
+    ]]
+  ]},
+  {b:3, t:"Novels", title:"Bài 03: Criticism Of The New Novel (Version 2) (2026)", f:4, q:[
+    ["16.1","What do some readers criticize about the book?","Một số độc giả phê bình điều gì về cuốn sách?",0,[
+      ["It is very similar to the author's other books","Cuốn sách rất giống những cuốn sách khác của tác giả."],
+      ["The vocabulary used is far too academic","Từ vựng được sử dụng quá mang tính học thuật."],
+      ["The physical quality of the hardback edition","Chất lượng vật lý của bản sách bìa cứng."]
+    ]],
+    ["16.2","How did the writer finish his book?","Nhà văn đã hoàn thành cuốn sách của mình như thế nào?",0,[
+      ["The plot was very strong","Cốt truyện rất chặt chẽ và thuyết phục."],
+      ["By incorporating feedback from a famous editor","Bằng cách tiếp thu phản hồi từ một biên tập viên nổi tiếng."],
+      ["It was completed much faster than his previous work","Cuốn sách được hoàn thành nhanh hơn nhiều so với tác phẩm trước của ông ấy."]
+    ]]
+  ]},
+  {b:4, t:"Novels", title:"Bài 04: Criticism Of The New Novel (Version 3) (2026)", f:4, q:[
+    ["16.1","Why do some readers struggle to connect with the characters in the novel?","Tại sao một số độc giả khó đồng cảm với các nhân vật trong tiểu thuyết?",0,[
+      ["They are difficult to relate to.","Các nhân vật khó tạo được sự đồng cảm."],
+      ["Their motivations are explained too clearly.","Động cơ của các nhân vật được giải thích quá rõ ràng."],
+      ["There are too many main characters to follow.","Có quá nhiều nhân vật chính để theo dõi."]
+    ]],
+    ["16.2","What criticism do readers have about the storyline?","Độc giả phê bình điều gì về mạch truyện?",0,[
+      ["It lacks originality.","Mạch truyện thiếu tính mới mẻ."],
+      ["It is too complex for a general audience.","Mạch truyện quá phức tạp đối với độc giả phổ thông."],
+      ["The plot twists are too predictable for experts.","Các bước ngoặt của cốt truyện quá dễ đoán đối với người am hiểu."]
+    ]]
+  ]},
+  {b:5, t:"Novels", title:"Bài 05: Criticism of the new novel - characters and popularity (2026)", f:4, q:[
+    ["16.1","What does the reviewer say about the characters?","Người đánh giá nói gì về các nhân vật?",0,[
+      ["They were interesting.","Các nhân vật rất thú vị."],
+      ["They were difficult to understand.","Các nhân vật khó hiểu."],
+      ["They were less important than the setting.","Các nhân vật ít quan trọng hơn bối cảnh."]
+    ]],
+    ["16.2","What does the reviewer predict about the novel?","Người đánh giá dự đoán điều gì về cuốn tiểu thuyết?",1,[
+      ["It will be quickly forgotten.","Cuốn tiểu thuyết sẽ nhanh chóng bị lãng quên."],
+      ["It will establish the author's popularity.","Cuốn tiểu thuyết sẽ giúp tác giả trở nên nổi tiếng."],
+      ["It will appeal only to existing fans.","Cuốn tiểu thuyết sẽ chỉ thu hút những người hâm mộ hiện có."]
+    ]]
+  ]},
+  {b:6, t:"Novels", title:"Bài 06: A new novel - Hopeless Love", f:0, q:[
+    ["16.1","Why does the reviewer struggle with the novel's characters?","Tại sao người đánh giá gặp khó khăn với các nhân vật trong tiểu thuyết?",0,[
+      ["They are difficult to relate to.","Các nhân vật khó tạo được sự đồng cảm."],
+      ["There are too few of them.","Có quá ít nhân vật."],
+      ["Their decisions are always fully explained.","Những quyết định của các nhân vật luôn được giải thích đầy đủ."]
+    ]],
+    ["16.2","How does the reviewer describe the novel overall?","Người đánh giá mô tả tổng thể cuốn tiểu thuyết như thế nào?",1,[
+      ["A simple but complete success.","Một thành công đơn giản nhưng trọn vẹn."],
+      ["An ambitious failure.","Một tác phẩm đầy tham vọng nhưng thất bại."],
+      ["A conventional love story.","Một câu chuyện tình yêu theo lối thông thường."]
+    ]]
+  ]},
+  {b:7, t:"Professionalism at Work", title:"Bài 07: Professionalism at work (2026)", f:4, q:[
+    ["17.1","What does the expert say being professional is all about?","Theo chuyên gia, cốt lõi của việc hành xử chuyên nghiệp là gì?",0,[
+      ["To maintain a positive attitude.","Duy trì thái độ tích cực."],
+      ["To create a good working environment.","Tạo ra một môi trường làm việc tốt."],
+      ["To make a good impression.","Tạo ấn tượng tốt."]
+    ]],
+    ["17.2","What does the expert say about the definition of professionalism?","Chuyên gia nói gì về định nghĩa của tính chuyên nghiệp?",1,[
+      ["It is the same as 40 years ago.","Định nghĩa này vẫn giống như 40 năm trước."],
+      ["Our definition of it is changing.","Cách chúng ta định nghĩa tính chuyên nghiệp đang thay đổi."],
+      ["It will not change anymore.","Định nghĩa này sẽ không thay đổi nữa."]
+    ]]
+  ]},
+  {b:8, t:"Work from Home", title:"Bài 08: Work from home (2026)", f:4, q:[
+    ["16.1","What does she say about working at home?","Cô ấy nói gì về việc làm việc tại nhà?",1,[
+      ["There are no distractions","Không có yếu tố gây xao nhãng."],
+      ["Not good as expected","Không tốt như mong đợi."],
+      ["Video calls are superior to face-to-face conversation","Các cuộc gọi video tốt hơn việc trò chuyện trực tiếp."]
+    ]],
+    ["16.2","According to the author, working from home:","Theo tác giả, việc làm việc tại nhà như thế nào?",2,[
+      ["Needs a big home office","Cần có một phòng làm việc lớn tại nhà."],
+      ["Do not require self-motivation.","Không đòi hỏi khả năng tự tạo động lực."],
+      ["It depends on your situation and personality","Phụ thuộc vào hoàn cảnh và tính cách của bạn."]
+    ]]
+  ]},
+  {b:9, t:"Life after University", title:"Bài 09: Life after university (2026)", f:4, q:[
+    ["16.1","How does life change for graduates after university?","Cuộc sống của sinh viên tốt nghiệp thay đổi như thế nào sau khi rời đại học?",2,[
+      ["They feel more stressed about job seeking","Họ cảm thấy căng thẳng hơn về việc tìm kiếm việc làm."],
+      ["They are likely to stick to their academic routines","Họ có xu hướng giữ nguyên nếp sinh hoạt thời đi học."],
+      ["They gradually become more independent in making decisions.","Họ dần trở nên độc lập hơn trong việc đưa ra quyết định."]
+    ]],
+    ["16.2","What is a common characteristic of the job market after university?","Một đặc điểm phổ biến của thị trường việc làm sau đại học là gì?",1,[
+      ["More opportunities for networking","Có nhiều cơ hội mở rộng mạng lưới quan hệ hơn."],
+      ["More competitive","Cạnh tranh hơn."],
+      ["Many jobs offer great benefits","Nhiều công việc có chế độ phúc lợi rất tốt."]
+    ]]
+  ]},
+  {b:10, t:"Life after University", title:"Bài 10: Life after university (Version 2) (2026)", f:4, q:[
+    ["17.1","What should students do when choosing a career?","Sinh viên nên làm gì khi chọn nghề nghiệp?",0,[
+      ["Be flexible and open minded","Linh hoạt và cởi mở."],
+      ["Choose the same career as their friends","Chọn cùng nghề với bạn bè."],
+      ["Focus only on the salary offered","Chỉ tập trung vào mức lương được đề nghị."]
+    ]],
+    ["17.2","What should students pay attention to when applying for jobs these days?","Sinh viên nên chú ý điều gì khi ứng tuyển việc làm hiện nay?",0,[
+      ["They are becoming more competitive","Việc ứng tuyển đang trở nên cạnh tranh hơn."],
+      ["Most jobs no longer require any qualifications","Hầu hết công việc không còn đòi hỏi bất kỳ bằng cấp nào."],
+      ["Companies prefer handwritten applications","Các công ty thích đơn ứng tuyển viết tay."]
+    ]]
+  ]},
+  {b:11, t:"Product Promotion Campaigns", title:"Bài 11: A promotion campaign for a product (2026)", f:4, q:[
+    ["17.1","What is the main issue with the product's promotion campaign?","Vấn đề chính của chiến dịch quảng bá sản phẩm là gì?",1,[
+      ["It is using outdated advertising methods","Chiến dịch sử dụng những phương pháp quảng cáo lỗi thời."],
+      ["They use exaggerated claims","Họ đưa ra những tuyên bố phóng đại."],
+      ["It is not targeting the correct market","Chiến dịch không nhắm đúng thị trường."]
+    ]],
+    ["17.2","Why is the product struggling to stand out in the market?","Tại sao sản phẩm gặp khó khăn trong việc tạo sự khác biệt trên thị trường?",1,[
+      ["It is priced too high compared to its competitors","Giá sản phẩm quá cao so với các đối thủ cạnh tranh."],
+      ["It is too similar to many existing products","Sản phẩm quá giống nhiều sản phẩm hiện có."],
+      ["It is not available in enough stores","Sản phẩm chưa được bán ở đủ nhiều cửa hàng."]
+    ]]
+  ]},
+  {b:12, t:"Product Promotion Campaigns", title:"Bài 12: A Promotion Campaign for a Product (2026)", f:4, q:[
+    ["17.1","What is the speaker's main criticism of the promotion campaign?","Ý kiến phê bình chính của người nói về chiến dịch quảng bá là gì?",0,[
+      ["It makes exaggerated claims about the product.","Chiến dịch đưa ra những tuyên bố phóng đại về sản phẩm."],
+      ["It provides too little information about the product.","Chiến dịch cung cấp quá ít thông tin về sản phẩm."],
+      ["It focuses too much on the product's low price.","Chiến dịch quá tập trung vào mức giá thấp của sản phẩm."]
+    ]],
+    ["17.2","Why does the speaker think the campaign may not be profitable?","Tại sao người nói cho rằng chiến dịch có thể không sinh lời?",1,[
+      ["It targets the wrong group of customers.","Chiến dịch nhắm sai nhóm khách hàng."],
+      ["It costs too much to make compared with the possible return.","Chi phí thực hiện quá cao so với lợi nhuận có thể thu về."],
+      ["It has not attracted enough public attention.","Chiến dịch chưa thu hút đủ sự chú ý của công chúng."]
+    ]]
+  ]},
+  {b:13, t:"Managing Spending and Personal Finances", title:"Bài 13: Managing financial spending (2026)", f:4, q:[
+    ["16.1","How does the speaker recommend saving money effectively?","Người nói khuyên nên tiết kiệm tiền hiệu quả như thế nào?",1,[
+      ["Saving a large amount only on a daily basis.","Chỉ tiết kiệm một khoản lớn hằng ngày."],
+      ["Save a fixed amount regularly.","Tiết kiệm một khoản cố định đều đặn."],
+      ["Use credit cards to manage expenses.","Sử dụng thẻ tín dụng để quản lý chi phí."]
+    ]],
+    ["16.2","Who does the speaker believe can save money most successfully?","Người nói cho rằng ai có thể tiết kiệm tiền thành công nhất?",0,[
+      ["Get advice from people that have experience","Xin lời khuyên từ những người có kinh nghiệm."],
+      ["Keep all your savings in a single account","Giữ toàn bộ tiền tiết kiệm trong một tài khoản duy nhất."],
+      ["Avoid making any long-term financial plans","Tránh lập bất kỳ kế hoạch tài chính dài hạn nào."]
+    ]]
+  ]},
+  {b:14, t:"Managing Spending and Personal Finances", title:"Bài 14: Managing financial spending (Version 2) (2026)", f:4, q:[
+    ["17.1","What should you do to better control your short-term spending?","Bạn nên làm gì để kiểm soát chi tiêu ngắn hạn tốt hơn?",0,[
+      ["Monitor your spending for a weekly plan","Theo dõi chi tiêu để lập kế hoạch hằng tuần."],
+      ["Rely on credit cards to control spending","Dựa vào thẻ tín dụng để kiểm soát chi tiêu."],
+      ["Put aside a large sum every single day only","Chỉ để dành một khoản tiền lớn mỗi ngày."]
+    ]],
+    ["17.2","What should you do to better control your long-term spending?","Bạn nên làm gì để kiểm soát chi tiêu dài hạn tốt hơn?",0,[
+      ["Seek advice from someone who have experience","Tìm lời khuyên từ người có kinh nghiệm."],
+      ["Keep all your savings in a single account","Giữ toàn bộ tiền tiết kiệm trong một tài khoản duy nhất."],
+      ["Avoid making any long-term financial plans","Tránh lập bất kỳ kế hoạch tài chính dài hạn nào."]
+    ]]
+  ]},
+  {b:15, t:"Managing Spending and Personal Finances", title:"Bài 15: Personal finances - managing resources", f:0, q:[
+    ["16.1","What should people do with their financial resources?","Mọi người nên làm gì với các nguồn lực tài chính của mình?",0,[
+      ["Organise their resources more effectively.","Sắp xếp các nguồn lực của mình hiệu quả hơn."],
+      ["Spend all their income immediately.","Tiêu ngay toàn bộ thu nhập."],
+      ["Avoid keeping any record of expenses.","Tránh ghi chép bất kỳ khoản chi phí nào."]
+    ]],
+    ["16.2","Whose advice should people seek?","Mọi người nên tìm lời khuyên từ ai?",2,[
+      ["Someone who has never managed a budget.","Một người chưa từng quản lý ngân sách."],
+      ["Only people with a very high salary.","Chỉ những người có mức lương rất cao."],
+      ["Someone who is experienced.","Một người có kinh nghiệm."]
+    ]]
+  ]},
+  {b:16, t:"Security Cameras", title:"Bài 16: Security cameras (2026)", f:4, q:[
+    ["17.1","What is the speaker's opinion about security cameras at work?","Người nói có ý kiến gì về camera an ninh tại nơi làm việc?",0,[
+      ["People are unnecessarily worried about them","Mọi người lo lắng về camera một cách không cần thiết."],
+      ["Most people don't even realize cameras are present.","Hầu hết mọi người thậm chí không nhận ra có camera."],
+      ["Cameras should be placed to ensure complete coverage.","Camera nên được bố trí để bao quát toàn bộ khu vực."]
+    ]],
+    ["17.2","How does the speaker suggest people should feel about security cameras at work?","Người nói cho rằng mọi người nên cảm thấy như thế nào về camera an ninh tại nơi làm việc?",2,[
+      ["People often find them intimidating and invasive.","Mọi người thường thấy camera gây sợ hãi và xâm phạm quyền riêng tư."],
+      ["Many believe they are only useful after incidents have occurred.","Nhiều người cho rằng camera chỉ hữu ích sau khi sự cố đã xảy ra."],
+      ["People should feel reassured about their presence","Mọi người nên cảm thấy yên tâm khi có camera."]
+    ]]
+  ]},
+  {b:17, t:"Security Cameras", title:"Bài 17: Security cameras (2026) - Bản lặp", f:4, q:[
+    ["17.1","What is the speaker's opinion about security cameras at work?","Người nói có ý kiến gì về camera an ninh tại nơi làm việc?",0,[
+      ["People are unnecessarily worried about them","Mọi người lo lắng về camera một cách không cần thiết."],
+      ["Most people do not even realise cameras are present.","Hầu hết mọi người thậm chí không nhận ra có camera."],
+      ["Cameras should be placed to ensure complete coverage.","Camera nên được bố trí để bao quát toàn bộ khu vực."]
+    ]],
+    ["17.2","How does the speaker suggest people should feel about security cameras at work?","Người nói cho rằng mọi người nên cảm thấy như thế nào về camera an ninh tại nơi làm việc?",2,[
+      ["People often find them intimidating and invasive.","Mọi người thường thấy camera gây sợ hãi và xâm phạm quyền riêng tư."],
+      ["Many believe they are only useful after incidents have occurred.","Nhiều người cho rằng camera chỉ hữu ích sau khi sự cố đã xảy ra."],
+      ["People should feel reassured about their presence","Mọi người nên cảm thấy yên tâm khi có camera."]
+    ]]
+  ]},
+  {b:18, t:"Research into Happiness", title:"Bài 18: A research into happiness (2026)", f:4, q:[
+    ["16.1","What does the radio MC say about how the research on happiness has been covered by the media?","Người dẫn chương trình phát thanh nói gì về cách truyền thông đưa tin về nghiên cứu hạnh phúc?",1,[
+      ["It has been accurately reported by the media","Nghiên cứu được truyền thông đưa tin chính xác."],
+      ["It has not been accurately reported by the media","Nghiên cứu chưa được truyền thông đưa tin chính xác."],
+      ["It has been ignored completely by the media","Nghiên cứu bị truyền thông hoàn toàn phớt lờ."]
+    ]],
+    ["16.2","According to the radio MC, what is unlikely regarding the research on happiness?","Theo người dẫn chương trình phát thanh, điều gì khó có khả năng xảy ra liên quan đến nghiên cứu hạnh phúc?",1,[
+      ["To find personal happiness","Tìm được hạnh phúc cá nhân."],
+      ["To find a conclusive answer","Tìm được một câu trả lời mang tính kết luận."],
+      ["To discuss happiness in the media","Thảo luận về hạnh phúc trên truyền thông."]
+    ]]
+  ]},
+  {b:19, t:"A Break from Studying", title:"Bài 19: A break from studying (2026)", f:4, q:[
+    ["16.1","Why did he decide to travel for 2 years?","Tại sao anh ấy quyết định đi du lịch trong hai năm?",0,[
+      ["To be more independent","Để trở nên độc lập hơn."],
+      ["To avoid studying.","Để tránh việc học."],
+      ["To travelling.","Để đi du lịch."]
+    ]],
+    ["16.2","Why hasn't he gone to college?","Tại sao anh ấy chưa vào đại học?",0,[
+      ["He wasn't ready to start higher education","Anh ấy chưa sẵn sàng bắt đầu học đại học."],
+      ["He couldn't afford the tuition fees.","Anh ấy không đủ khả năng chi trả học phí."],
+      ["He didn't get good enough grades","Anh ấy không đạt điểm đủ cao."]
+    ]]
+  ]},
+  {b:20, t:"The Importance of Sleep", title:"Bài 20: The importance of sleep (2026)", f:3, q:[
+    ["17.1","What is the most important thing to help you sleep well?","Điều quan trọng nhất giúp bạn ngủ ngon là gì?",0,[
+      ["Blocking noise and light is the key","Ngăn tiếng ồn và ánh sáng là yếu tố then chốt."],
+      ["Beds are best for sleeping","Giường là nơi tốt nhất để ngủ."],
+      ["Resting sufficiently is necessary","Nghỉ ngơi đầy đủ là điều cần thiết."]
+    ]],
+    ["17.2","According to the expert, what is the public attitude towards sleeping?","Theo chuyên gia, công chúng có thái độ như thế nào đối với việc ngủ?",0,[
+      ["The media overemphasize the subject","Truyền thông quá nhấn mạnh chủ đề này."],
+      ["The young generation tends to have unhealthy sleeping habits.","Thế hệ trẻ có xu hướng có thói quen ngủ không lành mạnh."],
+      ["Sleeping quality has deteriorated over time.","Chất lượng giấc ngủ đã giảm sút theo thời gian."]
+    ]]
+  ]},
+  {b:21, t:"The Importance of Sleep", title:"Bài 21: The importance of sleep (Version 2) (2026)", f:3, q:[
+    ["16.1","What is the way to have a good sleep according to the speaker?","Theo người nói, cách để có một giấc ngủ ngon là gì?",0,[
+      ["Blocking out noise and light is key","Ngăn tiếng ồn và ánh sáng là yếu tố then chốt."],
+      ["Drinking coffee before bed helps relax the mind","Uống cà phê trước khi ngủ giúp thư giãn tâm trí."],
+      ["Sleeping fewer hours increases deep sleep quality","Ngủ ít giờ hơn giúp tăng chất lượng giấc ngủ sâu."]
+    ]],
+    ["16.2","What is the speaker's view on insomnia in general?","Nhìn chung, người nói có quan điểm gì về chứng mất ngủ?",0,[
+      ["People can't always recognize the symptoms of tiredness","Mọi người không phải lúc nào cũng nhận ra các dấu hiệu mệt mỏi."],
+      ["Most people with insomnia actually sleep too much","Hầu hết người bị mất ngủ thực ra ngủ quá nhiều."],
+      ["Insomnia is caused only by physical health problems","Mất ngủ chỉ do các vấn đề sức khỏe thể chất gây ra."]
+    ]]
+  ]},
+  {b:22, t:"Script Production", title:"Bài 22: Script production - dialogue and industry demands (2026)", f:3, q:[
+    ["16.1","What part of the movie is disappointing?","Phần nào của bộ phim gây thất vọng?",0,[
+      ["The dialogue seems unrealistic.","Lời thoại có vẻ không chân thực."],
+      ["The settings do not make sense.","Bối cảnh không hợp lý."],
+      ["The original cast was replaced.","Dàn diễn viên ban đầu đã bị thay thế."]
+    ]],
+    ["16.2","What is the expert comment on the movie industry?","Chuyên gia nhận xét gì về ngành điện ảnh?",1,[
+      ["Technology will soon replace human actors.","Công nghệ sẽ sớm thay thế diễn viên là con người."],
+      ["The new industry demand is negatively influencing script production","Những yêu cầu mới của ngành đang tác động tiêu cực đến việc sản xuất kịch bản."],
+      ["New story plots should be invented to capture the audience's interest","Cần sáng tạo những cốt truyện mới để thu hút sự quan tâm của khán giả."]
+    ]]
+  ]},
+  {b:23, t:"Script Production", title:"Bài 23: Script production (2026)", f:3, q:[
+    ["17.1","What is the speaker's opinion on this script?","Người nói có ý kiến gì về kịch bản này?",0,[
+      ["The characters' background are not adequately explored","Hoàn cảnh của các nhân vật chưa được khai thác đầy đủ."],
+      ["The setting feels too unrealistic","Bối cảnh có vẻ quá phi thực tế."],
+      ["The dialogue is too complex for viewers","Lời thoại quá phức tạp đối với người xem."]
+    ]],
+    ["17.2","How do industries impact script production?","Các ngành công nghiệp tác động đến việc sản xuất kịch bản như thế nào?",2,[
+      ["They increase audience engagement significantly","Chúng làm tăng đáng kể mức độ tương tác của khán giả."],
+      ["They provide more creative freedom to writers","Chúng mang lại nhiều tự do sáng tạo hơn cho người viết."],
+      ["The new industry demands have a negative influence.","Những yêu cầu mới của ngành có ảnh hưởng tiêu cực."]
+    ]]
+  ]},
+  {b:24, t:"Writers and Their Works", title:"Bài 24: Famous writers (2026)", f:3, q:[
+    ["16.1","What was the lecturer's opinion about both authors' past work?","Giảng viên nhận xét gì về các tác phẩm trước đây của cả hai tác giả?",1,[
+      ["They have both been overlooked by ACADEMICS.","Cả hai đều bị giới học thuật bỏ qua."],
+      ["They make reference to each other's work.","Họ nhắc đến tác phẩm của nhau trong sáng tác của mình."],
+      ["One was less successful than the other.","Một người ít thành công hơn người còn lại."]
+    ]],
+    ["16.2","What did the lecturer say about both authors?","Giảng viên nói gì về cả hai tác giả?",2,[
+      ["Their reputation goes beyond their target audience.","Danh tiếng của họ vượt ra ngoài nhóm độc giả mục tiêu."],
+      ["They should have been more popular.","Lẽ ra họ nên được biết đến rộng rãi hơn."],
+      ["It is not always easy for the meanings to be IDENTIFIED.","Không phải lúc nào cũng dễ nhận ra ý nghĩa trong các tác phẩm của họ."]
+    ]]
+  ]},
+  {b:25, t:"Writers and Their Works", title:"Bài 25: Famous writers (Version 2) (2026)", f:3, q:[
+    ["17.1","What do these two famous writers have in common?","Hai nhà văn nổi tiếng này có điểm chung gì?",0,[
+      ["They both make references to each other in their work","Cả hai đều nhắc đến nhau trong tác phẩm của mình."],
+      ["They both wrote in the same genre","Cả hai đều viết cùng một thể loại."],
+      ["They both were born in the same country","Cả hai đều sinh ra ở cùng một quốc gia."]
+    ]],
+    ["17.2","What is special about their works?","Tác phẩm của họ có điểm gì đặc biệt?",0,[
+      ["The meaning of their work is not always easily identified","Không phải lúc nào cũng dễ nhận ra ý nghĩa trong tác phẩm của họ."],
+      ["Their works are all based on real events","Tất cả tác phẩm của họ đều dựa trên những sự kiện có thật."],
+      ["They use simple language and structure","Họ sử dụng ngôn ngữ và cấu trúc đơn giản."]
+    ]]
+  ]},
+  {b:26, t:"Writers and Their Works", title:"Bài 26: Two big writers of history - William Shakespeare and Louis Michael", f:0, q:[
+    ["16.1","What do the two writers have in common?","Hai nhà văn có điểm chung gì?",0,[
+      ["They both have something to say about modern society.","Cả hai đều có điều muốn nói về xã hội hiện đại."],
+      ["They wrote in exactly the same historical period.","Họ viết trong đúng cùng một thời kỳ lịch sử."],
+      ["They avoided social themes.","Họ tránh các chủ đề xã hội."]
+    ]],
+    ["16.2","What does the speaker say about the meaning of their work?","Người nói nhận xét gì về ý nghĩa trong tác phẩm của họ?",1,[
+      ["It is always stated directly.","Ý nghĩa luôn được nêu trực tiếp."],
+      ["It is not always easily identified.","Không phải lúc nào cũng dễ nhận ra ý nghĩa."],
+      ["It depends only on the setting.","Ý nghĩa chỉ phụ thuộc vào bối cảnh."]
+    ]]
+  ]},
+  {b:27, t:"Writers and Their Works", title:"Bài 27: Modern Society", f:0, q:[
+    ["16.1","What is one of the strong qualities of these modern works?","Một điểm mạnh của những tác phẩm hiện đại này là gì?",0,[
+      ["Have something to say about modern society","Có điều muốn nói về xã hội hiện đại."],
+      ["Strictly adhere to classical artistic conventions","Tuân thủ nghiêm ngặt các quy ước nghệ thuật cổ điển."],
+      ["Focus exclusively on historical events and figures","Chỉ tập trung vào các sự kiện và nhân vật lịch sử."]
+    ]],
+    ["16.2","What does the speaker say about the meanings of these works?","Người nói nhận xét gì về ý nghĩa của những tác phẩm này?",0,[
+      ["The meanings are not easily identified","Không dễ nhận ra ý nghĩa của các tác phẩm."],
+      ["They provide direct and simplified moral lessons","Các tác phẩm đưa ra những bài học đạo đức trực tiếp và đơn giản."],
+      ["The core message is usually stated in the opening","Thông điệp chính thường được nêu ngay ở phần mở đầu."]
+    ]]
+  ]},
+  {b:28, t:"Regional Development Plans", title:"Bài 28: A regional development plan (2026)", f:3, q:[
+    ["16.1","What is one of the main criticisms of the Regional Development Plan?","Một trong những ý kiến phê bình chính đối với Kế hoạch Phát triển Vùng là gì?",2,[
+      ["It increases the number of public parks in the area","Kế hoạch làm tăng số lượng công viên công cộng trong khu vực."],
+      ["It provides free public transportation for all residents","Kế hoạch cung cấp giao thông công cộng miễn phí cho tất cả cư dân."],
+      ["It doesn't do enough to promote alternatives to driving","Kế hoạch chưa làm đủ để thúc đẩy các phương án thay thế việc đi ô tô."]
+    ]],
+    ["16.2","What challenge is the Regional Development Plan likely to face?","Kế hoạch Phát triển Vùng có khả năng gặp phải thách thức nào?",2,[
+      ["There is too much public support, making it hard to manage expectations","Có quá nhiều sự ủng hộ từ công chúng, khiến việc quản lý kỳ vọng trở nên khó khăn."],
+      ["The plan has already exceeded its budget by a large margin","Kế hoạch đã vượt ngân sách một khoản lớn."],
+      ["The plan is not making efficient use of existing land","Kế hoạch chưa sử dụng hiệu quả quỹ đất hiện có."]
+    ]]
+  ]},
+  {b:29, t:"Regional Development Plans", title:"Bài 29: Regional Development Plan (Version 2) (2026)", f:3, q:[
+    ["16.1","What is one of the main criticisms of the Regional Development Plan?","Một trong những ý kiến phê bình chính đối với Kế hoạch Phát triển Vùng là gì?",0,[
+      ["It doesn't provide enough alternatives to driving.","Kế hoạch không cung cấp đủ phương án thay thế việc đi ô tô."],
+      ["The proposed budget relies too heavily on international loans.","Ngân sách đề xuất phụ thuộc quá nhiều vào các khoản vay quốc tế."],
+      ["It focuses exclusively on urban areas while ignoring rural zones.","Kế hoạch chỉ tập trung vào đô thị và bỏ qua các khu vực nông thôn."]
+    ]],
+    ["16.2","What challenge is the Regional Development Plan likely to face?","Kế hoạch Phát triển Vùng có khả năng gặp phải thách thức nào?",0,[
+      ["It is likely to meet resistance from local communities.","Kế hoạch có thể vấp phải sự phản đối từ các cộng đồng địa phương."],
+      ["The legal framework for the plan has not been finalized yet.","Khung pháp lý cho kế hoạch chưa được hoàn thiện."],
+      ["A shortage of skilled engineers might stall the infrastructure phase.","Việc thiếu kỹ sư có chuyên môn có thể làm đình trệ giai đoạn xây dựng cơ sở hạ tầng."]
+    ]]
+  ]},
+  {b:30, t:"Books about Scientists", title:"Bài 30: A book about a life of a scientist (2026)", f:3, q:[
+    ["17.1","What does the speaker say about the way of writing?","Người nói nhận xét gì về cách viết?",1,[
+      ["It is focused on technical details","Cuốn sách tập trung vào các chi tiết kỹ thuật."],
+      ["It is exciting to read","Cuốn sách đọc rất hấp dẫn."],
+      ["It is more of a textbook than a biography","Cuốn sách giống giáo trình hơn là tiểu sử."]
+    ]],
+    ["17.2","What does the speaker say about the overall content of the book?","Người nói nhận xét gì về nội dung tổng thể của cuốn sách?",0,[
+      ["It has been written for a general audience","Cuốn sách được viết cho đông đảo độc giả."],
+      ["It is only suitable for experts in the field","Cuốn sách chỉ phù hợp với các chuyên gia trong lĩnh vực này."],
+      ["It lacks engaging storytelling","Cuốn sách thiếu lối kể chuyện hấp dẫn."]
+    ]]
+  ]},
+  {b:31, t:"Books about Scientists", title:"Bài 31: A book about a life of a scientist (Version 2) (2026)", f:3, q:[
+    ["17.1","Why do many readers find the book interesting?","Tại sao nhiều độc giả thấy cuốn sách thú vị?",0,[
+      ["It uses simple language to describe complex ideas.","Cuốn sách sử dụng ngôn ngữ đơn giản để mô tả những ý tưởng phức tạp."],
+      ["It relies heavily on technical vocabulary.","Cuốn sách sử dụng rất nhiều từ vựng chuyên môn."],
+      ["It avoids explaining abstract concepts.","Cuốn sách tránh giải thích các khái niệm trừu tượng."]
+    ]],
+    ["17.2","Why is the book so popular?","Tại sao cuốn sách lại được yêu thích như vậy?",0,[
+      ["It is similar to the previous book about the scientist.","Cuốn sách giống cuốn sách trước đó viết về nhà khoa học này."],
+      ["It is too long.","Cuốn sách quá dài."],
+      ["It is too difficult to understand.","Cuốn sách quá khó hiểu."]
+    ]]
+  ]},
+  {b:32, t:"Biography", title:"Bài 32: Biography (2026)", f:3, q:[
+    ["17.1","What is the strength of the book?","Điểm mạnh của cuốn sách là gì?",1,[
+      ["It is a very short story.","Đó là một câu chuyện rất ngắn."],
+      ["It has a good description of a specific period of time.","Cuốn sách mô tả tốt một giai đoạn thời gian cụ thể."],
+      ["It focuses only on famous people.","Cuốn sách chỉ tập trung vào những người nổi tiếng."]
+    ]],
+    ["17.2","What do the critics say about the book?","Các nhà phê bình nói gì về cuốn sách?",0,[
+      ["It is an unconventional biography.","Đó là một cuốn tiểu sử không theo lối thông thường."],
+      ["It is too difficult to understand.","Cuốn sách quá khó hiểu."],
+      ["It contains too many fictional details.","Cuốn sách chứa quá nhiều chi tiết hư cấu."]
+    ]]
+  ]},
+  {b:33, t:"The Music Industry and Music Careers", title:"Bài 33: Industry of Making Music (2026)", f:3, q:[
+    ["16.1","What is the key to a long career in music?","Chìa khóa để có một sự nghiệp âm nhạc lâu dài là gì?",1,[
+      ["Having a large number of fans.","Có một lượng người hâm mộ đông đảo."],
+      ["Believing in her musical instincts.","Tin vào bản năng âm nhạc của cô ấy."],
+      ["Winning many awards early.","Sớm giành được nhiều giải thưởng."]
+    ]],
+    ["16.2","What is the speaker's opinion about the current music industry?","Người nói có ý kiến gì về ngành âm nhạc hiện nay?",0,[
+      ["Performers find it hard to get started.","Các nghệ sĩ biểu diễn gặp khó khăn khi bắt đầu sự nghiệp."],
+      ["It is easier than ever to become famous.","Trở nên nổi tiếng dễ hơn bao giờ hết."],
+      ["Most musicians prefer traditional styles.","Hầu hết nhạc sĩ thích các phong cách truyền thống."]
+    ]]
+  ]},
+  {b:34, t:"The Music Industry and Music Careers", title:"Bài 34: A musician's career (2026)", f:3, q:[
+    ["16.1","What will this musician do in the near future?","Nghệ sĩ này sẽ làm gì trong tương lai gần?",0,[
+      ["He will probably retire from singing","Có lẽ ông ấy sẽ nghỉ hát."],
+      ["He plans to release a new album","Ông ấy dự định phát hành một album mới."],
+      ["He wants to collaborate with younger artists","Ông ấy muốn hợp tác với những nghệ sĩ trẻ hơn."]
+    ]],
+    ["16.2","What does the speaker think about his career in general?","Nhìn chung, người nói nghĩ gì về sự nghiệp của nghệ sĩ này?",1,[
+      ["He regrets choosing his profession","Ông ấy hối tiếc vì đã chọn nghề này."],
+      ["He could have been more successful","Ông ấy lẽ ra có thể thành công hơn."],
+      ["He believes he reached the peak too early","Ông ấy cho rằng mình đã đạt đỉnh cao quá sớm."]
+    ]]
+  ]},
+  {b:35, t:"Productivity", title:"Bài 35: Productivity (2026)", f:3, q:[
+    ["16.1","How to maximise productivity?","Làm thế nào để tối đa hóa năng suất?",0,[
+      ["Effective time management","Quản lý thời gian hiệu quả."],
+      ["Working longer hours each day","Làm việc nhiều giờ hơn mỗi ngày."],
+      ["Avoiding all planning","Tránh mọi hoạt động lập kế hoạch."]
+    ]],
+    ["16.2","What is the problem of the productivity strategies?","Vấn đề của các chiến lược nâng cao năng suất là gì?",0,[
+      ["Using them effectively requires effort","Sử dụng chúng hiệu quả đòi hỏi nỗ lực."],
+      ["They only work for students","Chúng chỉ có tác dụng đối với sinh viên."],
+      ["They are too expensive to implement","Chi phí triển khai chúng quá cao."]
+    ]]
+  ]},
+  {b:36, t:"Podcasts", title:"Bài 36: Podcast Discussion (2026)", f:3, q:[
+    ["16.1","Why did the new podcast fail?","Tại sao podcast mới thất bại?",1,[
+      ["The content was too long.","Nội dung quá dài."],
+      ["The creators did not promote their show effectively.","Những người sáng tạo không quảng bá chương trình hiệu quả."],
+      ["It had too many listeners.","Chương trình có quá nhiều người nghe."]
+    ]],
+    ["16.2","What is the speaker's opinion about podcasting?","Người nói có ý kiến gì về việc làm podcast?",1,[
+      ["It is a waste of time.","Đó là một việc lãng phí thời gian."],
+      ["It is a great way to build a community.","Đó là một cách tuyệt vời để xây dựng cộng đồng."],
+      ["It is only useful for entertainment.","Việc này chỉ hữu ích cho mục đích giải trí."]
+    ]]
+  ]},
+  {b:37, t:"School Sports", title:"Bài 37: Sports in education", f:0, q:[
+    ["17.1","What is the expert's opinion about sport competitions?","Chuyên gia có ý kiến gì về các cuộc thi thể thao?",2,[
+      ["Provide school with external investments","Mang lại nguồn đầu tư từ bên ngoài cho nhà trường."],
+      ["Nature potential sportsmen for the country.","Bồi dưỡng những vận động viên tiềm năng cho đất nước."],
+      ["They can cause harmful effects","Các cuộc thi này có thể gây ra những tác động có hại."]
+    ]],
+    ["17.2","What is the expert's advice for schools?","Chuyên gia đưa ra lời khuyên gì cho các trường học?",1,[
+      ["Should consider sports as a mandatory subject.","Nên coi thể thao là một môn học bắt buộc."],
+      ["Provides them with a balance in their lives.","Giúp học sinh có sự cân bằng trong cuộc sống."],
+      ["Keep students focus on academic subjects","Giữ cho học sinh tập trung vào các môn học thuật."]
+    ]]
+  ]},
+  {b:38, t:"School Sports", title:"Bài 38: The Sport (Version 2) (2026)", f:3, q:[
+    ["16.1","What is the expert's opinion about sports competitions?","Chuyên gia có ý kiến gì về các cuộc thi thể thao?",0,[
+      ["Prepare students for a competitive work environment","Chuẩn bị cho học sinh bước vào một môi trường làm việc cạnh tranh."],
+      ["Attract significant funding from international sponsors.","Thu hút nguồn tài trợ lớn từ các nhà tài trợ quốc tế."],
+      ["Identify and recruit professional athletes for national teams.","Phát hiện và tuyển chọn vận động viên chuyên nghiệp cho các đội tuyển quốc gia."]
+    ]],
+    ["16.2","What is the expert's advice for schools?","Chuyên gia đưa ra lời khuyên gì cho các trường học?",0,[
+      ["Provides them with a balance in their lives","Giúp học sinh có sự cân bằng trong cuộc sống."],
+      ["Enforce athletic participation as a strict graduation requirement.","Bắt buộc tham gia thể thao như một điều kiện tốt nghiệp nghiêm ngặt."],
+      ["Restrict physical activities to ensure academic excellence.","Hạn chế hoạt động thể chất để bảo đảm thành tích học tập xuất sắc."]
+    ]]
+  ]},
+  {b:39, t:"School Sports", title:"Bài 39: The Sport (Version 3) (2026)", f:3, q:[
+    ["16.1","According to the reviewer, what is one benefit of school sports?","Theo người đánh giá, một lợi ích của thể thao học đường là gì?",0,[
+      ["They help promote students' overall health.","Thể thao giúp tăng cường sức khỏe tổng thể của học sinh."],
+      ["They primarily focus on academic competition.","Thể thao chủ yếu tập trung vào cạnh tranh học thuật."],
+      ["They are designed to limit physical exertion.","Thể thao được thiết kế để hạn chế hoạt động thể chất."]
+    ]],
+    ["16.2","What else do school sports provide for students?","Thể thao học đường còn mang lại điều gì cho học sinh?",0,[
+      ["It provides balance.","Mang lại sự cân bằng."],
+      ["It encourages extreme specialization.","Khuyến khích chuyên môn hóa quá mức."],
+      ["It prioritizes individual over team success.","Ưu tiên thành công cá nhân hơn thành công của đội."]
+    ]]
+  ]},
+  {b:40, t:"School Sports", title:"Bài 40: The Sport (Version 3) (2026) - Bản lặp", f:3, q:[
+    ["16.1","According to the reviewer, what is one benefit of school sports?","Theo người đánh giá, một lợi ích của thể thao học đường là gì?",0,[
+      ["They help promote students' overall health.","Thể thao giúp tăng cường sức khỏe tổng thể của học sinh."],
+      ["They primarily focus on academic competition.","Thể thao chủ yếu tập trung vào cạnh tranh học thuật."],
+      ["They are designed to limit physical exertion.","Thể thao được thiết kế để hạn chế hoạt động thể chất."]
+    ]],
+    ["16.2","What else do school sports provide for students?","Thể thao học đường còn mang lại điều gì cho học sinh?",0,[
+      ["It provides balance.","Mang lại sự cân bằng."],
+      ["It encourages extreme specialization.","Khuyến khích chuyên môn hóa quá mức."],
+      ["It prioritizes individual over team success.","Ưu tiên thành công cá nhân hơn thành công của đội."]
+    ]]
+  ]},
+  {b:41, t:"Television Series", title:"Bài 41: Television series (2026)", f:2, q:[
+    ["16.1","What happened to the TV series?","Điều gì đã xảy ra với bộ phim truyền hình?",2,[
+      ["It didn't receive enough investment in the early stage.","Bộ phim không nhận được đủ vốn đầu tư ở giai đoạn đầu."],
+      ["It was overlooked by critics.","Bộ phim bị các nhà phê bình bỏ qua."],
+      ["It caught the audience's attention from the start.","Bộ phim thu hút sự chú ý của khán giả ngay từ đầu."]
+    ]],
+    ["16.2","According to the expert, what is the series' potential?","Theo chuyên gia, bộ phim có tiềm năng gì?",2,[
+      ["New seasons will be produced due to great demand.","Các mùa mới sẽ được sản xuất do nhu cầu lớn."],
+      ["It inspires young filmmakers to follow a new movie-making style.","Bộ phim truyền cảm hứng cho các nhà làm phim trẻ theo đuổi một phong cách làm phim mới."],
+      ["It can help reach new customers.","Bộ phim có thể giúp tiếp cận những khách hàng mới."]
+    ]]
+  ]},
+  {b:42, t:"Television Series", title:"Bài 42: Television Series (2026)", f:2, q:[
+    ["17.1","What does the speaker say is one major strength of successful television series?","Theo người nói, một điểm mạnh chính của những bộ phim truyền hình thành công là gì?",1,[
+      ["They focus mainly on famous actors.","Chúng chủ yếu tập trung vào các diễn viên nổi tiếng."],
+      ["They maintain consistent quality throughout.","Chúng duy trì chất lượng đồng đều từ đầu đến cuối."],
+      ["They are usually shorter than films.","Chúng thường ngắn hơn phim điện ảnh."]
+    ]],
+    ["17.2","What does the speaker suggest about changes in television production?","Người nói gợi ý điều gì về những thay đổi trong việc sản xuất phim truyền hình?",2,[
+      ["Streaming platforms have reduced production costs.","Các nền tảng phát trực tuyến đã làm giảm chi phí sản xuất."],
+      ["Television series are becoming less creative.","Phim truyền hình đang trở nên kém sáng tạo hơn."],
+      ["Viewer habits influence the way that series are made.","Thói quen của người xem ảnh hưởng đến cách làm phim truyền hình."]
+    ]]
+  ]},
+  {b:43, t:"Television Series", title:"Bài 43: Television Series (Version 3) (2026)", f:2, q:[
+    ["16.1","What happened when the TV series first aired?","Điều gì xảy ra khi bộ phim truyền hình được phát sóng lần đầu?",0,[
+      ["It failed to engage the audience from the start","Bộ phim không thu hút được khán giả ngay từ đầu."],
+      ["It utilized a massive celebrity marketing budget","Bộ phim sử dụng một ngân sách tiếp thị rất lớn với sự tham gia của người nổi tiếng."],
+      ["The plot was based on a globally famous novel","Cốt truyện dựa trên một tiểu thuyết nổi tiếng toàn cầu."]
+    ]],
+    ["16.2","What problem does the reviewer mention about the series?","Người đánh giá đề cập đến vấn đề gì của bộ phim?",0,[
+      ["Series are damaged by overexposure","Các bộ phim dài tập bị ảnh hưởng tiêu cực do xuất hiện quá nhiều."],
+      ["The production quality is inconsistent between episodes","Chất lượng sản xuất không đồng đều giữa các tập."],
+      ["There is a lack of diversity in the casting","Dàn diễn viên thiếu sự đa dạng."]
+    ]]
+  ]},
+  {b:44, t:"Television Series", title:"Bài 44: TV series - overexposure and opening audience", f:0, q:[
+    ["16.1","What does the reviewer say about overexposure?","Người đánh giá nói gì về việc xuất hiện quá nhiều?",0,[
+      ["Series are damaged by overexposure.","Các bộ phim dài tập bị ảnh hưởng tiêu cực do xuất hiện quá nhiều."],
+      ["It guarantees a larger audience.","Việc này bảo đảm lượng khán giả lớn hơn."],
+      ["It improves every later episode.","Việc này cải thiện mọi tập phim về sau."]
+    ]],
+    ["16.2","What happened at the beginning of the series?","Điều gì xảy ra ở giai đoạn đầu của bộ phim?",1,[
+      ["It failed to attract any viewers.","Bộ phim không thu hút được bất kỳ người xem nào."],
+      ["It caught the audience's attention from the beginning.","Bộ phim thu hút sự chú ý của khán giả ngay từ đầu."],
+      ["It was delayed for several weeks.","Bộ phim bị trì hoãn trong vài tuần."]
+    ]]
+  ]},
+  {b:45, t:"Advertising and Sponsoring", title:"Bài 45: Advertising and sponsoring (2026)", f:2, q:[
+    ["17.1","What does the expert say about the negative side of advertising?","Chuyên gia nói gì về mặt tiêu cực của quảng cáo?",0,[
+      ["Series are damaged by overexposure.","Các bộ phim dài tập bị ảnh hưởng tiêu cực do xuất hiện quá nhiều."],
+      ["Advertisements might sometimes be repetitive, which is annoying.","Quảng cáo đôi khi lặp đi lặp lại, gây khó chịu."],
+      ["Advertising costs the same amount of money to produce a movie.","Chi phí sản xuất quảng cáo bằng chi phí sản xuất một bộ phim."]
+    ]],
+    ["17.2","In what way can advertising affect sports?","Quảng cáo có thể ảnh hưởng đến thể thao như thế nào?",2,[
+      ["They help to attract more fans.","Quảng cáo giúp thu hút thêm người hâm mộ."],
+      ["They can boost ticket sales and sales of sports-related items.","Quảng cáo có thể thúc đẩy doanh số bán vé và các mặt hàng liên quan đến thể thao."],
+      ["They can generate negative publicity for the sport.","Quảng cáo có thể tạo ra dư luận tiêu cực về môn thể thao đó."]
+    ]]
+  ]},
+  {b:46, t:"Advertising and Sponsoring", title:"Bài 46: Advertising and sponsoring (Version 2) (2026)", f:2, q:[
+    ["16.1","What is the importance of advertising?","Quảng cáo có tầm quan trọng gì?",0,[
+      ["It can help reach new customers","Quảng cáo có thể giúp tiếp cận khách hàng mới."],
+      ["It increases the product price","Quảng cáo làm tăng giá sản phẩm."],
+      ["It can build brand recognition","Quảng cáo có thể xây dựng khả năng nhận diện thương hiệu."]
+    ]],
+    ["16.2","Why shouldn't we sponsor sports tournaments?","Tại sao chúng ta không nên tài trợ cho các giải đấu thể thao?",0,[
+      ["They can generate negative publicity for the sport","Việc tài trợ có thể tạo ra dư luận tiêu cực về môn thể thao đó."],
+      ["They are too expensive","Các giải đấu quá tốn kém."],
+      ["They can create unfair competition","Việc tài trợ có thể tạo ra sự cạnh tranh không công bằng."]
+    ]]
+  ]},
+  {b:47, t:"Advertising and Sponsoring", title:"Bài 47: Advertising And Sponsoring (Version 3) (2026)", f:2, q:[
+    ["16.1","What does the expert say about advertising?","Chuyên gia nói gì về quảng cáo?",0,[
+      ["It helps to reach new customers","Quảng cáo giúp tiếp cận khách hàng mới."],
+      ["It primarily focuses on reducing production costs","Quảng cáo chủ yếu tập trung vào việc giảm chi phí sản xuất."],
+      ["It has become less effective due to digital media","Quảng cáo trở nên kém hiệu quả hơn do truyền thông kỹ thuật số."]
+    ]],
+    ["16.2","In what way can advertising affect sports?","Quảng cáo có thể ảnh hưởng đến thể thao như thế nào?",0,[
+      ["They are not always good for sports fans","Quảng cáo không phải lúc nào cũng tốt cho người hâm mộ thể thao."],
+      ["They guarantee a win for the sponsored teams","Quảng cáo bảo đảm các đội được tài trợ sẽ chiến thắng."],
+      ["They focus exclusively on amateur local events","Quảng cáo chỉ tập trung vào các sự kiện nghiệp dư ở địa phương."]
+    ]]
+  ]},
+  {b:48, t:"Writer's Block", title:"Bài 48: Writer's block (2026)", f:2, q:[
+    ["16.1","What does the writer believe helps her the most in her writing process?","Nhà văn cho rằng điều gì giúp ích cho cô ấy nhiều nhất trong quá trình viết?",1,[
+      ["Writing every day for 15-20 minutes","Viết mỗi ngày trong 15–20 phút."],
+      ["Create dedicated periods for writing","Dành những khoảng thời gian riêng cho việc viết."],
+      ["Finding a quiet space to work","Tìm một không gian yên tĩnh để làm việc."]
+    ]],
+    ["16.2","What does the writer regret doing during her experience with writer's block?","Nhà văn hối tiếc vì đã làm gì trong thời gian bị bế tắc khi viết?",0,[
+      ["Refuse to seek advice of others","Không chịu tìm kiếm lời khuyên từ người khác."],
+      ["Ignoring feedback from editors","Bỏ qua phản hồi từ các biên tập viên."],
+      ["Writing without a plan","Viết mà không có kế hoạch."]
+    ]]
+  ]},
+  {b:49, t:"Guidebooks", title:"Bài 49: A new guide (2026)", f:2, q:[
+    ["16.1","What does this guidebook offer to its audience?","Cuốn sách hướng dẫn này mang lại điều gì cho độc giả?",1,[
+      ["It focuses solely on historical landmarks.","Cuốn sách chỉ tập trung vào các địa danh lịch sử."],
+      ["It creates an adventure.","Cuốn sách mang lại một chuyến phiêu lưu."],
+      ["It is difficult to navigate.","Cuốn sách khó tra cứu."]
+    ]],
+    ["16.2","What is the speaker's opinion about this guidebook?","Người nói có ý kiến gì về cuốn sách hướng dẫn này?",2,[
+      ["It caters only to seasoned travelers.","Cuốn sách chỉ phục vụ những người có kinh nghiệm du lịch."],
+      ["It is outdated and irrelevant.","Cuốn sách đã lỗi thời và không còn phù hợp."],
+      ["It is suitable for particular generations.","Cuốn sách phù hợp với một số thế hệ nhất định."]
+    ]]
+  ]},
+  {b:50, t:"Guidebooks", title:"Bài 50: A new guide (2026) - Bản lặp", f:2, q:[
+    ["16.1","What does this guidebook offer to its audience?","Cuốn sách hướng dẫn này mang lại điều gì cho độc giả?",1,[
+      ["It focuses solely on historical landmarks.","Cuốn sách chỉ tập trung vào các địa danh lịch sử."],
+      ["It creates an adventure.","Cuốn sách mang lại một chuyến phiêu lưu."],
+      ["It is difficult to navigate.","Cuốn sách khó tra cứu."]
+    ]],
+    ["16.2","What is the speaker's opinion about this guidebook?","Người nói có ý kiến gì về cuốn sách hướng dẫn này?",2,[
+      ["It caters only to seasoned travellers.","Cuốn sách chỉ phục vụ những người có kinh nghiệm du lịch."],
+      ["It is outdated and irrelevant.","Cuốn sách đã lỗi thời và không còn phù hợp."],
+      ["It is suitable for particular generations.","Cuốn sách phù hợp với một số thế hệ nhất định."]
+    ]]
+  ]},
+  {b:51, t:"Setting Goals and Making Plans", title:"Bài 51: Setting goals (2026)", f:2, q:[
+    ["16.1","What does the speaker say about short-term goals?","Người nói nhận xét gì về các mục tiêu ngắn hạn?",0,[
+      ["It helps people adjust their priorities when circumstances change.","Chúng giúp mọi người điều chỉnh thứ tự ưu tiên khi hoàn cảnh thay đổi."],
+      ["It creates pressure and limits creativity","Chúng tạo áp lực và hạn chế sự sáng tạo."],
+      ["It only apply to specific situations or certain types of people","Chúng chỉ áp dụng cho một số tình huống hoặc một số nhóm người nhất định."]
+    ]],
+    ["16.2","What is the speaker's opinion about goal setting?","Người nói có ý kiến gì về việc đặt mục tiêu?",1,[
+      ["It can lead to confusion and distraction","Việc này có thể dẫn đến sự bối rối và mất tập trung."],
+      ["It can prevent you from making mistakes","Việc này có thể giúp bạn tránh mắc sai lầm."],
+      ["It can bring about opportunities for individuals","Việc này có thể mang lại cơ hội cho mỗi cá nhân."]
+    ]]
+  ]},
+  {b:52, t:"Setting Goals and Making Plans", title:"Bài 52: Making Plans (2026)", f:2, q:[
+    ["16.1","What does the speaker say is a key benefit of making plans?","Theo người nói, một lợi ích chính của việc lập kế hoạch là gì?",1,[
+      ["They make life more predictable.","Các kế hoạch khiến cuộc sống dễ dự đoán hơn."],
+      ["They help you make decisions.","Các kế hoạch giúp bạn đưa ra quyết định."],
+      ["They reduce the need for communication.","Các kế hoạch làm giảm nhu cầu giao tiếp."]
+    ]],
+    ["16.2","What does the speaker mention as a difficulty when planning?","Người nói đề cập đến khó khăn nào khi lập kế hoạch?",1,[
+      ["It discourages people from taking risks.","Việc này khiến mọi người ngại chấp nhận rủi ro."],
+      ["It requires you to set yourself certain limits.","Việc này đòi hỏi bạn đặt ra những giới hạn nhất định cho bản thân."],
+      ["It only works in professional situations.","Việc này chỉ có tác dụng trong môi trường nghề nghiệp."]
+    ]]
+  ]},
+  {b:53, t:"Setting Goals and Making Plans", title:"Bài 53: Making plans - flexibility and limits (2026)", f:2, q:[
+    ["16.1","What is one benefit of making plans?","Một lợi ích của việc lập kế hoạch là gì?",1,[
+      ["It removes every unexpected event.","Việc này loại bỏ mọi sự kiện bất ngờ."],
+      ["It allows you to be more flexible.","Việc này giúp bạn linh hoạt hơn."],
+      ["It makes other people's advice unnecessary.","Việc này khiến lời khuyên của người khác trở nên không cần thiết."]
+    ]],
+    ["16.2","What difficulty does planning involve?","Việc lập kế hoạch có khó khăn gì?",0,[
+      ["It requires you to set yourself certain limits.","Việc này đòi hỏi bạn đặt ra những giới hạn nhất định cho bản thân."],
+      ["It prevents you from changing priorities.","Việc này ngăn bạn thay đổi thứ tự ưu tiên."],
+      ["It works only in professional life.","Việc này chỉ có tác dụng trong đời sống nghề nghiệp."]
+    ]]
+  ]},
+  {b:54, t:"Art Exhibitions", title:"Bài 54: An exhibition of the Greek artist Jim Panos (2026)", f:2, q:[
+    ["16.1","What do the guide and critics say about Panos's early paintings?","Người hướng dẫn và các nhà phê bình nói gì về những bức tranh thời kỳ đầu của Panos?",0,[
+      ["They would be similar to those of another artist.","Những bức tranh đó giống tranh của một họa sĩ khác."],
+      ["They mainly show modern technology.","Những bức tranh đó chủ yếu thể hiện công nghệ hiện đại."],
+      ["They use only bright colours.","Những bức tranh đó chỉ sử dụng màu sắc tươi sáng."]
+    ]],
+    ["16.2","What does the exhibition feel like to visitors?","Triển lãm tạo cho khách tham quan cảm giác như thế nào?",1,[
+      ["A prediction of the future.","Một dự đoán về tương lai."],
+      ["A window into the past.","Một khung cửa nhìn về quá khứ."],
+      ["A lesson about architecture.","Một bài học về kiến trúc."]
+    ]]
+  ]},
+  {b:55, t:"Art Exhibitions", title:"Bài 55: Exhibition by Greek artist Jame Panos (2026)", f:2, q:[
+    ["17.1","How did many art critics describe Jame Panos' paintings?","Nhiều nhà phê bình nghệ thuật mô tả tranh của Jame Panos như thế nào?",1,[
+      ["They were full of bright colours and happiness.","Các bức tranh tràn ngập màu sắc tươi sáng và niềm vui."],
+      ["They would be characterized by sadness.","Các bức tranh mang nét buồn bã."],
+      ["They mainly focused on modern city life.","Các bức tranh chủ yếu tập trung vào đời sống đô thị hiện đại."]
+    ]],
+    ["17.2","What did the exhibition seem like to visitors?","Triển lãm có vẻ như thế nào đối với khách tham quan?",1,[
+      ["A celebration of future ideas.","Một sự tôn vinh những ý tưởng của tương lai."],
+      ["A window into the past.","Một khung cửa nhìn về quá khứ."],
+      ["A lesson about modern architecture.","Một bài học về kiến trúc hiện đại."]
+    ]]
+  ]},
+  {b:56, t:"Restaurants", title:"Bài 56: A new restaurant (2026)", f:0, q:[
+    ["17.1","What are the critic's opinions about the restaurant?","Nhà phê bình có ý kiến gì về nhà hàng?",1,[
+      ["The food is not fresh","Thức ăn không tươi."],
+      ["The service is not good","Dịch vụ không tốt."],
+      ["The chief lack of experience","Đầu bếp thiếu kinh nghiệm."]
+    ]],
+    ["17.2","What can compete with online food delivery?","Điều gì có thể cạnh tranh với dịch vụ giao đồ ăn trực tuyến?",2,[
+      ["Organic ingredients","Nguyên liệu hữu cơ."],
+      ["Providing a ready-made pack for customers","Cung cấp các gói đồ ăn làm sẵn cho khách hàng."],
+      ["Customers feel valued and welcome","Khách hàng cảm thấy được coi trọng và được chào đón."]
+    ]]
+  ]},
+  {b:57, t:"Restaurants", title:"Bài 57: A restaurant Baloo", f:0, q:[
+    ["16.1","What disappointed the reviewer at Baloo?","Điều gì ở Baloo khiến người đánh giá thất vọng?",1,[
+      ["The food was not fresh.","Thức ăn không tươi."],
+      ["The standard of service was not good.","Chất lượng phục vụ không tốt."],
+      ["The dining room was unattractive.","Phòng ăn không đẹp mắt."]
+    ]],
+    ["16.2","What should restaurants do for their customers?","Các nhà hàng nên làm gì cho khách hàng của mình?",0,[
+      ["Make them feel valued and welcome.","Khiến khách hàng cảm thấy được coi trọng và được chào đón."],
+      ["Offer only expensive decorations.","Chỉ cung cấp những đồ trang trí đắt tiền."],
+      ["Stop answering questions about the menu.","Ngừng trả lời các câu hỏi về thực đơn."]
+    ]]
+  ]},
+  {b:58, t:"Learning and Development", title:"Bài 58: Learning and development", f:0, q:[
+    ["16.1","According to the speaker, how should we learn to work?","Theo người nói, chúng ta nên học cách làm việc như thế nào?",0,[
+      ["Effectively","Một cách hiệu quả."],
+      ["Independently without any guidance","Một cách độc lập mà không cần bất kỳ sự hướng dẫn nào."],
+      ["By following strictly fixed instructions","Bằng cách tuân thủ nghiêm ngặt những chỉ dẫn cố định."]
+    ]],
+    ["16.2","What should people be willing to do in order to make progress?","Mọi người nên sẵn sàng làm gì để tiến bộ?",0,[
+      ["Experiment","Thử nghiệm."],
+      ["Maintain a predictable daily routine","Duy trì một nếp sinh hoạt hằng ngày có thể dự đoán được."],
+      ["Avoid any risks in the workplace","Tránh mọi rủi ro tại nơi làm việc."]
+    ]]
+  ]},
+  {b:59, t:"The History of Railways", title:"Bài 59: The history of railways", f:0, q:[
+    ["16.1","What was one major problem the railways faced?","Một vấn đề lớn mà ngành đường sắt từng gặp phải là gì?",0,[
+      ["Not making enough money","Không kiếm đủ tiền."],
+      ["The lack of qualified engineers and staff","Thiếu kỹ sư và nhân viên có chuyên môn."],
+      ["Extreme weather damaging the tracks","Thời tiết khắc nghiệt làm hư hỏng đường ray."]
+    ]],
+    ["16.2","What did the leader in charge decide to do during this period?","Người lãnh đạo phụ trách đã quyết định làm gì trong giai đoạn này?",0,[
+      ["Continuing policies that had already been implemented","Tiếp tục những chính sách đã được triển khai."],
+      ["Suspending all operations for a total restructure","Tạm dừng toàn bộ hoạt động để tái cơ cấu hoàn toàn."],
+      ["Selling the assets to international investors","Bán tài sản cho các nhà đầu tư quốc tế."]
+    ]]
+  ]},
+  {b:60, t:"The Environment", title:"Bài 60: The environment", f:0, q:[
+    ["16.1","What should people do to maintain a healthy environment?","Mọi người nên làm gì để duy trì một môi trường lành mạnh?",0,[
+      ["Make a daily effort to recycle, reduce waste, and use energy carefully.","Nỗ lực mỗi ngày để tái chế, giảm rác thải và sử dụng năng lượng tiết kiệm."],
+      ["Limit industrial production to strictly rural areas","Giới hạn hoạt động sản xuất công nghiệp chỉ ở khu vực nông thôn."],
+      ["Replace all personal vehicles with electric bicycles","Thay thế tất cả phương tiện cá nhân bằng xe đạp điện."]
+    ]],
+    ["16.2","According to the text, how do human activities like deforestation affect us?","Theo nội dung bài, các hoạt động của con người như phá rừng ảnh hưởng đến chúng ta như thế nào?",0,[
+      ["They harm nature and cause problems like climate change and health issues.","Chúng gây hại cho thiên nhiên và gây ra các vấn đề như biến đổi khí hậu và vấn đề sức khỏe."],
+      ["They create more resilient ecosystems for the future","Chúng tạo ra các hệ sinh thái có khả năng chống chịu tốt hơn trong tương lai."],
+      ["They primarily benefit the local economy in the short term","Chúng chủ yếu mang lại lợi ích cho kinh tế địa phương trong ngắn hạn."]
+    ]]
+  ]},
+  {b:61, t:"Building Design", title:"Bài 61: Building design", f:0, q:[
+    ["16.1","Why do modern buildings stand out?","Tại sao các công trình hiện đại lại nổi bật?",0,[
+      ["They associate with modern cityscapes","Chúng gắn với cảnh quan đô thị hiện đại."],
+      ["They prioritize traditional materials over steel","Chúng ưu tiên vật liệu truyền thống hơn thép."],
+      ["They are primarily built in rural environments","Chúng chủ yếu được xây dựng ở nông thôn."]
+    ]],
+    ["16.2","What does the speaker say about many new buildings?","Người nói nhận xét gì về nhiều công trình mới?",0,[
+      ["They often display a lack of ambition.","Chúng thường cho thấy sự thiếu tham vọng."],
+      ["They represent the peak of architectural innovation","Chúng đại diện cho đỉnh cao của đổi mới kiến trúc."],
+      ["They focus on maximizing public green spaces","Chúng tập trung vào việc tối đa hóa không gian xanh công cộng."]
+    ]]
+  ]},
+  {b:62, t:"Concentration", title:"Bài 62: Concentration", f:0, q:[
+    ["16.1","What does the speaker say mostly affects concentration?","Theo người nói, điều gì ảnh hưởng nhiều nhất đến sự tập trung?",0,[
+      ["Concentration depends mostly on environment.","Sự tập trung phụ thuộc phần lớn vào môi trường."],
+      ["Concentration depends mainly on external distractions.","Sự tập trung phụ thuộc chủ yếu vào các yếu tố gây xao nhãng bên ngoài."],
+      ["Concentration is primarily influenced by individual effort.","Sự tập trung chịu ảnh hưởng chủ yếu từ nỗ lực của từng cá nhân."]
+    ]],
+    ["16.2","What is it that people often don't realize about focus?","Mọi người thường không nhận ra điều gì về khả năng tập trung? (Lưu ý: Bản gốc PDF chưa gạch chân, đáp án chuẩn là A)",0,[
+      ["People often fail to consider the limits of concentration.","Mọi người thường không tính đến giới hạn của khả năng tập trung."],
+      ["People often recognize the limits of concentration.","Mọi người thường nhận ra giới hạn của khả năng tập trung."],
+      ["People frequently excel at managing the limits of concentration.","Mọi người thường rất giỏi trong việc kiểm soát giới hạn của khả năng tập trung."]
+    ]]
+  ]},
+  {b:63, t:"Customers in Business", title:"Bài 63: Customers in business", f:0, q:[
+    ["16.1","Why is an 'important customer' valuable to a company?","Tại sao một khách hàng quan trọng lại có giá trị đối với công ty?",0,[
+      ["Because they provide steady money, influence others, and help improve services.","Vì họ mang lại nguồn thu ổn định, ảnh hưởng đến người khác và giúp cải thiện dịch vụ."],
+      ["Because they are responsible for hiring and training new employees.","Vì họ chịu trách nhiệm tuyển dụng và đào tạo nhân viên mới."],
+      ["Because they guarantee the company's stock prices will never fall.","Vì họ bảo đảm giá cổ phiếu của công ty sẽ không bao giờ giảm."]
+    ]],
+    ["16.2","What should a business do because customer behavior is unpredictable?","Do hành vi của khách hàng khó dự đoán, doanh nghiệp nên làm gì?",0,[
+      ["Businesses should monitor customer habits and update their services when needed.","Doanh nghiệp nên theo dõi thói quen của khách hàng và cập nhật dịch vụ khi cần."],
+      ["Reduce the marketing budget to avoid financial risks.","Giảm ngân sách tiếp thị để tránh rủi ro tài chính."],
+      ["Standardize all products to ignore individual customer preferences.","Chuẩn hóa tất cả sản phẩm để bỏ qua sở thích riêng của khách hàng."]
+    ]]
+  ]},
+  {b:64, t:"Team Motivation", title:"Bài 64: Team motivation", f:0, q:[
+    ["16.1","What occurs when things don't go according to plan in a team?","Điều gì xảy ra khi mọi việc trong nhóm không diễn ra theo kế hoạch?",0,[
+      ["The team members lose confidence.","Các thành viên trong nhóm mất tự tin."],
+      ["The team members become more assured.","Các thành viên trong nhóm trở nên tự tin hơn."],
+      ["The team members start again from the beginning.","Các thành viên trong nhóm bắt đầu lại từ đầu."]
+    ]],
+    ["16.2","In the speaker's view, what helps a leader maintain team motivation?","Theo người nói, điều gì giúp người lãnh đạo duy trì động lực của nhóm?",0,[
+      ["Set a realistic goal","Đặt ra một mục tiêu thực tế."],
+      ["Focus on individual performance only","Chỉ tập trung vào thành tích cá nhân."],
+      ["Increase the project budget significantly","Tăng đáng kể ngân sách dự án."]
+    ]]
+  ]},
+  {b:65, t:"Travelling and Reading", title:"Bài 65: Travelling and Reading", f:0, q:[
+    ["16.1","Why does the brother find traveling meaningful?","Tại sao người anh hoặc em trai thấy việc đi du lịch có ý nghĩa?",2,[
+      ["Because it allows him to escape his professional responsibilities.","Vì việc đó giúp anh ấy trốn tránh trách nhiệm nghề nghiệp."],
+      ["Because he wants to document his trips for social media influence.","Vì anh ấy muốn ghi lại các chuyến đi để tạo ảnh hưởng trên mạng xã hội."],
+      ["Because it brings him joy and chances to learn about different cultures.","Vì việc đó mang lại niềm vui và cơ hội tìm hiểu các nền văn hóa khác nhau."]
+    ]],
+    ["16.2","How is traveling similar to reading a book?","Đi du lịch giống việc đọc sách như thế nào?",1,[
+      ["Both are considered mandatory activities for academic success.","Cả hai đều được coi là hoạt động bắt buộc để thành công trong học tập."],
+      ["Both help people discover new worlds and grow as a person.","Cả hai giúp mọi người khám phá những thế giới mới và trưởng thành hơn."],
+      ["Both require a high level of physical endurance and preparation.","Cả hai đều đòi hỏi thể lực bền bỉ và sự chuẩn bị kỹ lưỡng."]
+    ]]
+  ]},
+  {b:66, t:"A Nutritionist's Career", title:"Bài 66: A nutritionist's career", f:0, q:[
+    ["16.1","When did she become a Nutritionist?","Cô ấy trở thành chuyên gia dinh dưỡng khi nào?",0,[
+      ["When she did a biology degree.","Khi cô ấy học chương trình lấy bằng sinh học."],
+      ["After working in a hospital.","Sau khi làm việc ở bệnh viện."],
+      ["When she worked at a healthcare center.","Khi cô ấy làm việc tại một trung tâm chăm sóc sức khỏe."]
+    ]],
+    ["16.2","When did she become famous?","Cô ấy trở nên nổi tiếng khi nào?",0,[
+      ["After solving people's problems in a helpline.","Sau khi giải quyết vấn đề cho mọi người qua đường dây tư vấn."],
+      ["After appearing on a famous TV show.","Sau khi xuất hiện trong một chương trình truyền hình nổi tiếng."],
+      ["After inventing a new type of food.","Sau khi phát minh ra một loại thực phẩm mới."]
+    ]]
+  ]},
+  {b:67, t:"Viral Videos", title:"Bài 67: Viral video", f:0, q:[
+    ["16.1","What makes the video stand out from others?","Điều gì làm cho video này nổi bật so với những video khác?",0,[
+      ["Its production techniques.","Kỹ thuật sản xuất của video."],
+      ["The high marketing budget involved.","Ngân sách tiếp thị lớn dành cho video."],
+      ["The participation of famous celebrities.","Sự tham gia của những người nổi tiếng."]
+    ]],
+    ["16.2","According to the reviewer, when can videos become more successful?","Theo người đánh giá, khi nào các video có thể thành công hơn?",0,[
+      ["They should be released at the right time.","Chúng nên được phát hành đúng thời điểm."],
+      ["When they strictly follow long-term trends.","Khi chúng tuân theo các xu hướng dài hạn một cách nghiêm ngặt."],
+      ["If they are translated into multiple languages.","Nếu chúng được dịch sang nhiều ngôn ngữ."]
+    ]]
+  ]},
+  {b:68, t:"Business Strategy", title:"Bài 68: Business strategy", f:0, q:[
+    ["16.1","Why is identifying the correct market so important for a company?","Tại sao việc xác định đúng thị trường lại rất quan trọng đối với công ty?",0,[
+      ["It helps the company focus its resources and avoid wasting time on low-demand areas.","Việc này giúp công ty tập trung nguồn lực và tránh lãng phí thời gian vào những lĩnh vực có nhu cầu thấp."],
+      ["It guarantees that the business will operate without any rival firms.","Việc này bảo đảm doanh nghiệp sẽ hoạt động mà không có đối thủ cạnh tranh."],
+      ["It provides a justification for lowering product standards to maximize profit.","Việc này tạo lý do để hạ tiêu chuẩn sản phẩm nhằm tối đa hóa lợi nhuận."]
+    ]],
+    ["16.2","According to the passage, what is the significance of 'profitability'?","Theo bài, khả năng sinh lời có ý nghĩa gì?",0,[
+      ["It proves the company can cover costs and strengthen the company's position in the market.","Nó chứng tỏ công ty có thể trang trải chi phí và củng cố vị thế trên thị trường."],
+      ["It signals that the company has no further need for market research.","Nó cho thấy công ty không còn cần nghiên cứu thị trường."],
+      ["It suggests that the company can disregard the activities of its competitors.","Nó cho thấy công ty có thể bỏ qua hoạt động của các đối thủ cạnh tranh."]
+    ]]
+  ]},
+  {b:69, t:"Work and Books", title:"Bài 69: Work And Books", f:0, q:[
+    ["16.1","According to the passage, how does work benefit an individual beyond just earning money?","Theo bài, ngoài việc kiếm tiền, công việc còn mang lại lợi ích gì cho mỗi người?",0,[
+      ["It helps develop skills, contribute to society, and provide a sense of purpose.","Công việc giúp phát triển kỹ năng, đóng góp cho xã hội và tạo cảm giác sống có mục đích."],
+      ["It primarily serves as a way to avoid social interactions","Công việc chủ yếu là cách để tránh tương tác xã hội."],
+      ["It focuses on maximizing leisure time during the weekends","Công việc tập trung vào việc tối đa hóa thời gian giải trí cuối tuần."]
+    ]],
+    ["16.2","What is the main result of balancing both work and books?","Kết quả chính của việc cân bằng giữa công việc và đọc sách là gì?",0,[
+      ["Growth in every area of a person's life","Phát triển trong mọi khía cạnh của cuộc sống."],
+      ["The complete separation of professional and private interests","Tách biệt hoàn toàn các mối quan tâm nghề nghiệp và cá nhân."],
+      ["A decrease in the need for formal education over time","Giảm nhu cầu học tập chính quy theo thời gian."]
+    ]]
+  ]},
+  {b:70, t:"Cycling Expeditions", title:"Bài 70: Cycling expedition", f:0, q:[
+    ["17.1","What is the speaker's advice?","Người nói đưa ra lời khuyên gì?",0,[
+      ["Be well informed of the places you are going to visit.","Tìm hiểu kỹ những nơi bạn sẽ đến thăm."],
+      ["Always carry extra water and food supplies.","Luôn mang thêm nước và lương thực dự phòng."],
+      ["Avoid cycling on rough terrain.","Tránh đạp xe trên địa hình gồ ghề."]
+    ]],
+    ["17.2","What is the speaker's advice in general?","Nhìn chung, người nói đưa ra lời khuyên gì?",0,[
+      ["Knowing the people and cultures in the different countries.","Tìm hiểu con người và văn hóa ở các quốc gia khác nhau."],
+      ["Only visit places with good weather conditions.","Chỉ đến những nơi có điều kiện thời tiết tốt."],
+      ["Cycle at your own pace without worrying about the destination.","Đạp xe theo nhịp độ của bạn mà không lo lắng về điểm đến."]
+    ]]
+  ]}
+];
+
+// Flatten into 140 question items
+const ALL_QUESTIONS = [];
+const TOPICS = new Set();
+
+RAW_LESSONS.forEach(lesson => {
+    TOPICS.add(lesson.t);
+    lesson.q.forEach((qItem, idx) => {
+        ALL_QUESTIONS.push({
+            id: `b${lesson.b}_q${idx+1}`,
+            lessonNum: lesson.b,
+            topic: lesson.t,
+            lessonTitle: lesson.title,
+            flames: lesson.f,
+            qCode: qItem[0],
+            qEn: qItem[1],
+            qVi: qItem[2],
+            correctIdx: qItem[3],
+            options: qItem[4].map((opt, oIdx) => ({
+                en: opt[0],
+                vi: opt[1],
+                isCorrect: oIdx === qItem[3]
+            }))
+        });
+    });
+});
+
+// State & SRS Storage
+const STORAGE_KEY = 'aptis_part4_srs_v1';
+let userProgress = {}; 
+let totalAttempts = 0;
+let totalCorrect = 0;
+
+function loadProgress() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            userProgress = parsed.progress || {};
+            totalAttempts = parsed.attempts || 0;
+            totalCorrect = parsed.correct || 0;
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+function saveProgress() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            progress: userProgress,
+            attempts: totalAttempts,
+            correct: totalCorrect
+        }));
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+function getQState(id, flames) {
+    if (!userProgress[id]) {
+        userProgress[id] = {
+            wrongCount: 0,
+            streak: 0,
+            mastered: false,
+            starred: flames >= 3,
+            lastSeen: 0
+        };
+    }
+    return userProgress[id];
+}
+
+// App Variables
+let currentMode = 'smart';
+let currentTopic = 'all';
+let currentQueue = [];
+let queueIndex = 0;
+let currentQuestion = null;
+let currentShuffledOptions = [];
+let answeredCurrent = false;
+let timerInterval = null;
+let timeLeft = 30;
+let maxTime = 30;
+
+// DOM Elements
+const topicSelect = document.getElementById('topicSelect');
+const timerSelect = document.getElementById('timerSelect');
+const timerText = document.getElementById('timerText');
+const timerBar = document.getElementById('timerBar');
+const timerBarWrap = document.getElementById('timerBarWrap');
+const badgeContainer = document.getElementById('badgeContainer');
+const lessonTitleEl = document.getElementById('lessonTitle');
+const qEnEl = document.getElementById('qEn');
+const qViEl = document.getElementById('qVi');
+const optionsListEl = document.getElementById('optionsList');
+const feedbackBox = document.getElementById('feedbackBox');
+const fbStatus = document.getElementById('fbStatus');
+const fbDetail = document.getElementById('fbDetail');
+const btnStar = document.getElementById('btnStar');
+const btnSpeakQ = document.getElementById('btnSpeakQ');
+const btnPrev = document.getElementById('btnPrev');
+const btnNext = document.getElementById('btnNext');
+const btnReset = document.getElementById('btnReset');
+const chkAutoAudio = document.getElementById('chkAutoAudio');
+const chkAlwaysVi = document.getElementById('chkAlwaysVi');
+
+// Populate Topics
+TOPICS.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t;
+    opt.textContent = `📌 ${t}`;
+    topicSelect.appendChild(opt);
+});
+
+// Shuffle Utility (Fisher-Yates)
+function shuffleArray(arr) {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+// Build Queue based on Mode & Topic & Spaced Repetition Priority
+function buildQueue() {
+    let pool = ALL_QUESTIONS.filter(q => currentTopic === 'all' || q.topic === currentTopic);
+
+    if (currentMode === 'hot') {
+        pool = pool.filter(q => {
+            const st = getQState(q.id, q.flames);
+            return q.flames > 0 || st.starred;
+        });
+    } else if (currentMode === 'wrong') {
+        pool = pool.filter(q => {
+            const st = getQState(q.id, q.flames);
+            return st.wrongCount > 0;
+        });
+    }
+
+    if (currentMode === 'smart') {
+        // Sort by SRS weight: Wrong items first -> Unmastered Hot items -> Unmastered normal -> Mastered
+        pool.sort((a, b) => {
+            const stA = getQState(a.id, a.flames);
+            const stB = getQState(b.id, b.flames);
+
+            const scoreA = (stA.wrongCount * 100) + (stA.mastered ? -50 : 20) + (a.flames * 8) + (stA.starred ? 15 : 0);
+            const scoreB = (stB.wrongCount * 100) + (stB.mastered ? -50 : 20) + (b.flames * 8) + (stB.starred ? 15 : 0);
+            return scoreB - scoreA;
+        });
+    } else if (currentMode === 'hot') {
+        pool.sort((a, b) => b.flames - a.flames);
+    }
+
+    currentQueue = pool;
+    queueIndex = 0;
+    updateStatsUI();
+}
+
+function updateStatsUI() {
+    let masteredCount = 0;
+    let wrongPoolCount = 0;
+    let hotCount = 0;
+
+    ALL_QUESTIONS.forEach(q => {
+        const st = getQState(q.id, q.flames);
+        if (st.mastered) masteredCount++;
+        if (st.wrongCount > 0) wrongPoolCount++;
+        if (q.flames > 0 || st.starred) hotCount++;
+    });
+
+    document.getElementById('statMastered').textContent = `${masteredCount}/${ALL_QUESTIONS.length}`;
+    document.getElementById('statWrong').textContent = wrongPoolCount;
+    document.getElementById('statHot').textContent = hotCount;
+    const acc = totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
+    document.getElementById('statAcc').textContent = `${acc}%`;
+}
+
+// Timer Logic
+function startTimer() {
+    clearInterval(timerInterval);
+    maxTime = parseInt(timerSelect.value, 10);
+    if (maxTime <= 0) {
+        timerBarWrap.style.display = 'none';
+        timerText.textContent = '∞';
+        return;
+    }
+    timerBarWrap.style.display = 'block';
+    timeLeft = maxTime;
+    updateTimerUI();
+
+    timerInterval = setInterval(() => {
+        if (answeredCurrent) {
+            clearInterval(timerInterval);
+            return;
+        }
+        timeLeft--;
+        updateTimerUI();
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            handleTimeOut();
+        }
+    }, 1000);
+}
+
+function updateTimerUI() {
+    timerText.textContent = `${timeLeft}s`;
+    const pct = Math.max(0, (timeLeft / maxTime) * 100);
+    timerBar.style.width = `${pct}%`;
+    if (pct <= 25) {
+        timerBar.style.backgroundColor = 'var(--danger)';
+    } else if (pct <= 50) {
+        timerBar.style.backgroundColor = 'var(--warning)';
+    } else {
+        timerBar.style.backgroundColor = 'var(--primary)';
+    }
+}
+
+function handleTimeOut() {
+    if (answeredCurrent) return;
+    selectOption(-1); // -1 means timeout
+}
+
+// Render Current Question
+function renderQuestion() {
+    stopSpeech();
+    if (currentQueue.length === 0) {
+        lessonTitleEl.textContent = '';
+        badgeContainer.innerHTML = '';
+        qEnEl.innerHTML = `<div class="empty-state">
+            <h3>🎉 Không có câu hỏi nào trong mục này!</h3>
+            <p>Nếu bạn đang ở mục "Câu hay sai", xin chúc mừng bạn đã hoàn thành hết các câu sai.</p>
+        </div>`;
+        qViEl.textContent = '';
+        optionsListEl.innerHTML = '';
+        feedbackBox.classList.remove('show');
+        clearInterval(timerInterval);
+        return;
+    }
+
+    if (queueIndex >= currentQueue.length) queueIndex = 0;
+    if (queueIndex < 0) queueIndex = currentQueue.length - 1;
+
+    currentQuestion = currentQueue[queueIndex];
+    const st = getQState(currentQuestion.id, currentQuestion.flames);
+    answeredCurrent = false;
+
+    // Badges
+    let badgesHTML = `<span class="badge">${queueIndex + 1}/${currentQueue.length}</span>`;
+    badgesHTML += `<span class="badge badge-topic">${currentQuestion.topic}</span>`;
+    if (currentQuestion.flames > 0) {
+        badgesHTML += `<span class="badge badge-hot">${'🔥'.repeat(currentQuestion.flames)}</span>`;
+    }
+    if (st.wrongCount > 0) {
+        badgesHTML += `<span class="badge badge-srs">Lặp lại SRS (Sai ${st.wrongCount} lần)</span>`;
+    } else if (st.mastered) {
+        badgesHTML += `<span class="badge" style="background:#dcfce7;color:#166534;">✓ Đã thuộc</span>`;
+    }
+    badgeContainer.innerHTML = badgesHTML;
+
+    // Star button
+    btnStar.classList.toggle('starred', st.starred);
+
+    // Titles & Question
+    lessonTitleEl.textContent = `${currentQuestion.lessonTitle} — Câu ${currentQuestion.qCode}`;
+    qEnEl.textContent = currentQuestion.qEn;
+    qViEl.textContent = currentQuestion.qVi;
+    qViEl.classList.toggle('show', chkAlwaysVi.checked);
+
+    // Shuffle options every time question loads
+    currentShuffledOptions = shuffleArray(currentQuestion.options);
+
+    optionsListEl.innerHTML = '';
+    const letters = ['A', 'B', 'C'];
+    currentShuffledOptions.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `
+            <span class="opt-letter">${letters[idx]}.</span>
+            <div class="opt-content">
+                <span class="opt-en">${opt.en}</span>
+                <span class="opt-vi ${chkAlwaysVi.checked ? 'show' : ''}">${opt.vi}</span>
+            </div>
+            <span class="opt-audio" data-speak="${ encodeURIComponent(opt.en) }" title="Nghe đáp án này">🔊</span>
+        `;
+        btn.addEventListener('click', (e) => {
+            if (e.target.classList.contains('opt-audio')) {
+                e.stopPropagation();
+                speakText(opt.en);
+                return;
+            }
+            selectOption(idx);
+        });
+        optionsListEl.appendChild(btn);
+    });
+
+    feedbackBox.classList.remove('show');
+    startTimer();
+
+    if (chkAutoAudio.checked) {
+        speakQuestionAndCorrect();
+    }
+}
+
+// Handle Option Selection & Spaced Repetition Re-queueing
+function selectOption(selectedIndex) {
+    if (answeredCurrent || !currentQuestion) return;
+    answeredCurrent = true;
+    clearInterval(timerInterval);
+
+    const st = getQState(currentQuestion.id, currentQuestion.flames);
+    st.lastSeen = Date.now();
+    totalAttempts++;
+
+    const isTimeout = selectedIndex === -1;
+    const chosenOpt = !isTimeout ? currentShuffledOptions[selectedIndex] : null;
+    const isCorrect = chosenOpt ? chosenOpt.isCorrect : false;
+
+    const optionButtons = optionsListEl.querySelectorAll('.option-btn');
+    optionButtons.forEach((btn, idx) => {
+        btn.disabled = true;
+        const opt = currentShuffledOptions[idx];
+        // Show Vietnamese translation immediately on feedback
+        btn.querySelector('.opt-vi').classList.add('show');
+
+        if (opt.isCorrect) {
+            btn.classList.add('correct');
+        } else if (idx === selectedIndex && !opt.isCorrect) {
+            btn.classList.add('wrong');
+        }
+    });
+
+    qViEl.classList.add('show');
+
+    const correctOpt = currentShuffledOptions.find(o => o.isCorrect);
+
+    if (isCorrect) {
+        totalCorrect++;
+        st.streak++;
+        if (st.wrongCount > 0) {
+            st.wrongCount--; // Reduce wrong penalty when answered right
+        }
+        if (st.streak >= 1 && st.wrongCount === 0) {
+            st.mastered = true;
+        }
+        fbStatus.innerHTML = `<span style="color:var(--success)">✅ CHÍNH XÁC!</span> <span style="font-size:0.78rem; color:var(--subtext)">Chuỗi đúng: ${st.streak}</span>`;
+        feedbackBox.style.borderLeftColor = 'var(--success)';
+    } else {
+        st.wrongCount += 2; // Increase priority in SRS
+        st.streak = 0;
+        st.mastered = false;
+
+        // SPACED REPETITION: Re-insert this question 3 positions ahead in the active queue so user practices it again soon!
+        const reinsertPos = Math.min(queueIndex + 3, currentQueue.length);
+        currentQueue.splice(reinsertPos, 0, currentQuestion);
+
+        const reason = isTimeout ? '⏰ HẾT GIỜ!' : '❌ CHƯA CHÍNH XÁC!';
+        fbStatus.innerHTML = `<span style="color:var(--danger)">${reason}</span> <span style="font-size:0.78rem; color:var(--danger)">Sẽ lặp lại sau 3 câu nữa!</span>`;
+        feedbackBox.style.borderLeftColor = 'var(--danger)';
+    }
+
+    fbDetail.innerHTML = `
+        <div><strong>Câu hỏi:</strong> ${currentQuestion.qVi}</div>
+        <div style="margin-top:4px;"><strong>Đáp án đúng:</strong> <span style="color:var(--success);font-weight:700;">${correctOpt.en}</span></div>
+        <div><strong>Dịch đáp án:</strong> ${correctOpt.vi}</div>
+    `;
+    feedbackBox.classList.add('show');
+
+    saveProgress();
+    updateStatsUI();
+}
+
+// Web Speech API (TTS)
+function stopSpeech() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+    }
+}
+
+function speakText(text) {
+    if (!('speechSynthesis' in window)) {
+        alert('Trình duyệt của bạn không hỗ trợ đọc giọng nói.');
+        return;
+    }
+    stopSpeech();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'en-GB';
+    utter.rate = 0.95;
+    window.speechSynthesis.speak(utter);
+}
+
+function speakQuestionAndCorrect() {
+    if (!currentQuestion) return;
+    const correctOpt = currentQuestion.options[currentQuestion.correctIdx];
+    const textToRead = `${currentQuestion.qEn}. ... Answer: ${correctOpt.en}`;
+    speakText(textToRead);
+}
+
+// Event Listeners
+btnSpeakQ.addEventListener('click', () => {
+    speakQuestionAndCorrect();
+});
+
+btnStar.addEventListener('click', () => {
+    if (!currentQuestion) return;
+    const st = getQState(currentQuestion.id, currentQuestion.flames);
+    st.starred = !st.starred;
+    btnStar.classList.toggle('starred', st.starred);
+    saveProgress();
+    updateStatsUI();
+});
+
+btnNext.addEventListener('click', () => {
+    queueIndex++;
+    renderQuestion();
+});
+
+btnPrev.addEventListener('click', () => {
+    queueIndex--;
+    renderQuestion();
+});
+
+document.querySelectorAll('.btn-mode').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMode = btn.getAttribute('data-mode');
+        buildQueue();
+        renderQuestion();
+    });
+});
+
+topicSelect.addEventListener('change', () => {
+    currentTopic = topicSelect.value;
+    buildQueue();
+    renderQuestion();
+});
+
+timerSelect.addEventListener('change', () => {
+    startTimer();
+});
+
+chkAlwaysVi.addEventListener('change', () => {
+    const show = chkAlwaysVi.checked || answeredCurrent;
+    qViEl.classList.toggle('show', show);
+    document.querySelectorAll('.opt-vi').forEach(el => el.classList.toggle('show', show));
+});
+
+btnReset.addEventListener('click', () => {
+    if (confirm('Bạn có chắc muốn xoá toàn bộ lịch sử học tập để làm lại từ đầu?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        userProgress = {};
+        totalAttempts = 0;
+        totalCorrect = 0;
+        buildQueue();
+        renderQuestion();
+    }
+});
+
+// Init App
+loadProgress();
+buildQueue();
+renderQuestion();
+</script>
+</body>
+</html>
